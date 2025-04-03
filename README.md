@@ -1,6 +1,6 @@
 # finally
 
-# 📚 BookStore Project
+# 📚 Books Project
 
 ## 🔗 API
 Проєкт використовує [Open Library API](https://openlibrary.org/developers/api) для отримання даних про книги, авторів та обкладинки.
