@@ -1,8 +1,5 @@
 # finally
 
-
-апі про книги
-https://openlibrary.org/developers/api
 # 📚 BookStore Project
 
 ## 🔗 API
