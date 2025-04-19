@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
 
+
+
 </head>
 <body>
 <div class="w-full mx-auto pt-[60px] px-[20px] sm:px-[50px] md:px-[50px] lg:px-[110px] xxl:px-[170px]">
@@ -56,13 +58,23 @@
 
             <div class="flex justify-between items-center  pt-[34px]">
                 <div class="relative flex flex-col lg:flex-row justify-center items-center w-full lg:justify-between md:gap-[24px] ">
-                    <a href="#popular" class="relative w-full sm:w-[153] h-[51px] flex items-center justify-center gap-[20px] border-[2px] px-[27px] py-[16px]   bg-yellow rounded-[10px] border-gray-800">
-                        <p  class="text-gray text-[16px] font-syne ">Explore</p>
-                        <img src="./icon/Binoculars.png" class="w-[24px] h-[19px]">
-                    </a>
+                    <div class="flex gap-[20px]">
+                        <a id="find-btn" href="#find" class="relative w-full xs:w-[103px] h-[51px] flex items-center justify-center gap-[20px] border-[2px] px-[27px] py-[16px] bg-yellow rounded-[10px] border-gray-800">
+                            <p class="text-gray text-[16px] font-syne">Find</p>
+                            <img src="./icon/find.png" class="w-[24px] h-[19px]">
+                        </a>
+                        <a href="#popular" class="relative w-full sm:w-[153px] h-[51px] flex items-center justify-center gap-[20px] border-[2px] px-[27px] py-[16px]   bg-yellow rounded-[10px] border-gray-800">
+                            <p  class="text-gray text-[16px] font-syne ">Explore </p>
+                            <img src="./icon/Binoculars.png" class="w-[24px] h-[19px]">
+                        </a>
 
-                    <img src="./icon/DashLine.svg" class="w-full py-[25px] text-lightGray">
+                    </div>
+
+                    <div class="w-full flex justify-center py-[25px]">
+                        <div class="w-full border-b-2 border-dashed border-lightGray"></div>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="relative pt-[105px] hidden lg:block   ">
@@ -75,6 +87,20 @@
         </div>
     </div>
     <section id="popular" class=" pt-[220px]">
+        <div id="search-results-wrapper" class="pt-[50px] pb-[100px] hidden">
+            <div class="flex flex-col items-center justify-center gap-[10px]">
+                <p class="text-[36px] font-[400] font-unica text-gray leading-[1.2]">Search Results</p>
+                <div class="flex gap-[9px]">
+                    <img src="./icon/Start.png" class="w-[16px] h-[16px]">
+                    <p class="text-[14px] font-syne font-[400] leading-[1.2] text-lightGray">Drag to explore</p>
+                </div>
+            </div>
+            <div class="flex justify-center items-center pt-[30px]">
+                <div id="search-results" class="w-full h-[410px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-around items-center">
+                    <div class="flex min-w-max gap-[100px]"></div>
+                </div>
+            </div>
+        </div>
         <div class="flex flex-col items-center justify-center gap-[10px]">
             <p class="text-[36px] font-[400] font-unica text-gray leading-[1.2]">Trending Books</p>
             <div class="flex gap-[9px]">
@@ -95,620 +121,53 @@
         </div>
         <div class="pt-[200px]">
             <div class="flex items-center gap-[10px]">
-                <img src="./icon/FOLDER_NOTCH_OPEN.png" class="w-[28px h-[21px]">
+                <img src="./icon/FOLDER_NOTCH_OPEN.png" class="w-[28px] h-[21px]">
                 <p class="text-[36px] text-gray font-unica leading-[1.2] font-[400]">Categories</p>
             </div>
-            <div class="list pt-[75px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[50px_63px] ">
-                <div class="relative h-[80px] ">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#adventure-books" data-genre="adventure" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center ">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Adventure</p>
-                    </a>
+            <div id="category-list-container" class="relative mt-10">
+                <div class="relative mt-10 overflow-hidden">
+                    <div class="relative h-[220px] w-full">
+                        <!-- Кнопки навігації -->
+                        <button id="prev-btn" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full shadow-md hover:bg-gray-800 z-10 w-10 h-10 flex items-center justify-center">
+                            ←
+                        </button>
+
+                        <!-- Контейнер слайдера -->
+                        <div id="category-list-wrapper" class="h-full mx-12 sm:mx-16 md:mx-20 overflow-hidden">
+                            <div id="category-list" class="grid pr-[15px] grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 grid-rows-2 gap-x-4 gap-y-6 sm:gap-x-6 md:gap-x-8 xl:gap-y-4 h-full transition-transform">
+                                <!-- Категорії жанрів будуть додаватися тут -->
+                            </div>
+                        </div>
+
+
+                        <button id="next-btn" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full shadow-md hover:bg-gray-800 z-10 w-10 h-10 flex items-center justify-center">
+                            →
+                        </button>
+                    </div>
                 </div>
 
-                <div class="relative h-[80px]">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#fantasy-books" data-genre="fantasy" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Fantasy</p>
-                    </a>
-                </div>
 
-                <div class="relative h-[80px]">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#sci-fi-books" data-genre="sci-fi" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Sci-Fi</p>
-                    </a>
-                </div>
 
-                <div class="relative h-[80px]">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#mystery-books" data-genre="mystery" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Mystery</p>
-                    </a>
-                </div>
+            </div>
 
-                <div class="relative h-[80px]">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#romance-books" data-genre="romance" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Romance</p>
-                    </a>
-                </div>
 
-                <div class="relative h-[80px]">
-                    <div class="absolute z-0 inset-0 rounded-[10px] bg-orange-500 translate-x-[13px] translate-y-[14px]"></div>
-                    <a href="#historical-fiction-books" data-genre="historical-fiction" class="genre-button relative z-10  w-full h-full rounded-[10px] border-2 border-gray bg-white no-underline cursor-pointer flex items-center justify-center">
-                        <p class="text-xl sm:text-2xl justify-center flex items-center text-gray font-syne leading-[1.2] px-4">Historical Fiction</p>
-                    </a>
+            <!-- Контейнер для відображення книг -->
+            <div id="books-container" class="mt-10">
+                <!-- Тут будуть книги, що відображаються в залежності від категорії -->
+            </div>
+
+            <div id="books-display">
+                <div class="flex min-w-max gap-[100px]">
+                    <!-- Тут будуть додаватися картки книг -->
                 </div>
             </div>
+
+
         </div>
 
-        <div id="adventure-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Пригоди</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
 
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
 
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
 
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="fantasy-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Фентезі</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="sci-fi-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Наукова фантастика</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="mystery-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Детективи</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="romance-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Романтика</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="historical-fiction-books" class="mt-10 hidden opacity-0 transition-opacity duration-300 pt-[150px]">
-            <h3>Історична проза</h3>
-            <div class="w-full h-[600px] border-2 border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 flex justify-center items-center">
-                <div class="flex min-w-max px-[90px] gap-[100px]">
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-2 rounded-[10px] bg-gray-300 w-[200px] h-[298px] flex-shrink-0 shadow-myshadow"></div>
-                        <div class="flex flex-col gap-[10px] ">
-                            <div class="flex gap-[7px] pt-[28px]">
-                                <div class="price flex justify-center items-center border-2 border-gray rounded-[20px] w-[136px] h-[46px]">
-                                    <p class="text-[24px] font-[400] font-syne leading-[1.2] text-gray " >$30.00</p>
-                                </div>
-                                <button class="save flex justify-center items-center border-2 border-gray rounded-[20px] w-[57px] h-[46px]">
-                                    <img src="./icon/SaveChoose.png" class="w-[13px] h-[19px]">
-                                </button>
-                            </div>
-
-                            <button class="shop flex justify-center items-center border-2 border-gray rounded-[20px] w-[200px] h-[46px] bg-yellow">
-                                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[25px]">
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -760,7 +219,7 @@
             <div class="pt-[44px] flex md:justify-between items-center gap-[24px] justify-center pb-[100px] flex-col sm:flex-row  sm:items-center">
                 <p class="text-[20px] font-syne font-[400] text-lightGray leading-[1.2] mb-4 sm:mb-0">BookStore Project</p>
                 <div class="flex gap-[24px]  flex-row items-start">
-                    <a href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_google-one-tap-submit" class="relative block w-[48px] h-[48px]">
+                    <a href="https://www.linkedin.com/in/%D0%B2%D1%96%D0%BA%D1%82%D0%BE%D1%80%D1%96%D1%8F-%D1%82%D0%BE%D0%BB%D1%81%D1%82%D0%B0%D1%8F-11038a356/" class="relative block w-[48px] h-[48px]">
                         <div class="flex justify-center items-center w-[48px] h-[48px] border-2 border-lightGray rounded-[100px] z-10 bg-white">
                             <img src="./icon/LINKEDINLOGO.png" class="w-[23px] h-[23px] ">
                         </div>
