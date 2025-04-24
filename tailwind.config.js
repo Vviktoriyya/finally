@@ -11,14 +11,16 @@ module.exports = {
             md: '768px',
             lg: '1097px',
             xl: '1280px',
-            xxl: '1536px'
+            xxl: '1536px',
+
         },
         extend: {
             colors: {
                 customBlue: '#3AB8EB',
                 gray: '#3D3C3C',
                 lightGray: '#676767',
-                yellow: '#FDBF0F'
+                yellow: '#FDBF0F',
+                Orange: '#F9784B'
             },
             fontFamily: {
                 'unica': ['Unica One', 'sans-serif'],
@@ -33,5 +35,19 @@ module.exports = {
 
         },
     },
-    plugins: [],
+    plugins: [
+        function ({ addUtilities }) {
+            addUtilities({
+                '.scrollbar-none': {
+                    'scrollbar-width': 'none',  /* Для Firefox */
+                    '-ms-overflow-style': 'none', /* Для IE */
+                },
+                '.scrollbar-hidden': {
+                    '::-webkit-scrollbar': {
+                        display: 'none',  /* Приховує скролбар у Webkit-браузерах (Chrome, Safari) */
+                    },
+                },
+            })
+        }
+    ],
 }
