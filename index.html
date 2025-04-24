@@ -25,10 +25,60 @@
             <p class="font-unica text-[20px]">BOOKStore</p>
         </div>
         <div class="buttons flex gap-[20px]">
-            <button><img src="./icon/SaveChoose.png" class="w-[16px] h-[23px]"></button>
+            <button id="openSavedModal" >
+                <img src="./icon/SaveChoose.png" class="w-[16px] h-[23px]">
+            </button>
             <button><img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[24px]"></button>
         </div>
     </div>
+    <!-- МОДАЛЬНЕ ВІКНО -->
+    <!-- Бокова модалка справа -->
+    <div id="savedModal" class="hidden fixed top-0 right-0 h-full w-[500px] z-50 bg-white shadow-lg flex justify-center items-center">
+        <div class="p-[30px] h-full flex flex-col relative overflow-y-auto">
+            <button id="closeModal" class="pt-[50px] absolute top-4 left-4 text-gray-500 text-[20px]">
+                <img src="./icon/CARET_LEFT.png" class="w-[32px] h-[32px]">
+            </button>
+            <div class="pt-[115px]">
+                <h2 class="text-xl font-bold mb-4 text-center">Saved books</h2>
+                <div id="savedBooksList" class="hidden text-gray-700 text-[16px] space-y-2 text-center mt-10">Список порожній</div>
+                <div class="border-gray flex  p-[26px]  border-2 border-dashed rounded-[20px] w-[416px] h-[200px]">
+                    <div class="book border-2  rounded-[10px] w-[100px] h-[150px] bg-gray-300 ">
+                        <img  alt="Book cover" class=" rounded-[10px]" />
+
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex gap-[40px]">
+                            <div class="flex flex-col gap-[12px]">
+                                <p class="flex pl-[31px] text-gray text-[16px] font-[400] leading-[1.2] font-syne">Book Name...</p>
+                                <p class="flex pl-[31px] text-gray text-[12px] font-[400] leading-[1.2] font-syne">Autor name...</p>
+                            </div>
+                            <div class="text-Orange text-[24px] font-[400] font-syne leading-[1.2]">
+                                30.00$
+                            </div>
+
+                        </div>
+                        <div class="flex justify-between gap-[150px]">
+                            <div class="flex items-center w-full pt-[80px] pl-[31px]  h-[35px] gap-[12px]">
+                                <button>
+                                    <img src="./icon/MINUS_CIRCLE.png" class="w-[16px] h-[16px]">
+                                </button>
+                                <div class="flex justify-center items-center w-[52px] h-[35px] border-2 rounded-[10px] border-gray text-[20px] font-syne font-[400] text-gray">01</div>
+                                <button>
+                                    <img src="./icon/PLUS_CIRCLE.png" class="w-[16px] h-[16px]">
+                                </button>
+
+                                <button class="flex items-end">
+                                    <img src="./icon/TRASH.png" class="w-[30px ] h-[32px]">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
     <div class="flex lg:justify-between justify-center relative  ">
         <div class="Preview sm:pt-[71px]   sm:px-0 ">
