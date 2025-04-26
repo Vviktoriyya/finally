@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// При пошуку "звичних" книг — оновлюється блок Trending
+// При пошуку "popular" книг — оновлюється блок Trending
 searchBtn.addEventListener('click', async () => {
     const query = input.value.trim();
     if (!query) return;
@@ -454,4 +454,64 @@ function generateRandomPrice() {
     // Додаємо .99
     return `$${integerPart}.99`;
 }
+
+
+
+// Знаходимо елементи
+const addToCartBtn = document.querySelector('a[href=""]'); // твоя кнопка "додати в кошик"
+const savedBooksList = document.getElementById('savedBooksList');
+const savedModal = document.getElementById('savedModal');
+
+// Функція для створення HTML книги в модалці
+function createSavedBook(title, author, price, imgSrc) {
+    const bookItem = document.createElement('div');
+    bookItem.className = 'flex items-center gap-4 p-4 border-b';
+
+    bookItem.innerHTML = `
+        <div class="w-[50px] h-[75px] bg-gray-300 rounded-[10px] overflow-hidden">
+            <img src="${imgSrc}" alt="Book cover" class="w-full h-full object-cover" />
+        </div>
+        <div class="flex flex-col text-left">
+            <p class="font-bold text-gray-800">${title}</p>
+            <p class="text-gray-500 text-sm">${author}</p>
+            <p class="text-orange-500 text-lg">${price}</p>
+        </div>
+    `;
+
+    return bookItem;
+}
+
+// Обробник кліку на кнопку додати в кошик
+addToCartBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Щоб не перезавантажувалась сторінка через <a href="">
+
+    const title = document.getElementById('book-title').innerText.trim();
+    const author = document.getElementById('book-author').innerText.trim();
+    const price = document.getElementById('book-price').innerText.trim();
+    const img = document.getElementById('book-img').getAttribute('src') || '';
+
+    if (title && author && price) {
+        const savedBook = createSavedBook(title, author, price, img);
+
+        // Якщо "Список порожній", видаляємо цей текст
+        if (savedBooksList.classList.contains('hidden')) {
+            savedBooksList.classList.remove('hidden');
+            savedBooksList.innerHTML = '';
+        }
+
+        savedBooksList.appendChild(savedBook);
+
+        // Відкриваємо модалку
+        savedModal.classList.remove('hidden');
+    }
+});
+
+// Закриття модалки
+const closeModalBtn = document.getElementById('closeModal');
+closeModalBtn.addEventListener('click', () => {
+    savedModal.classList.add('hidden');
+});
+
+
+
 //ass
