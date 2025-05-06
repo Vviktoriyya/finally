@@ -446,14 +446,13 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function generateRandomPrice() {
-    // Генеруємо ціну від 5 до 50 доларів
     const minPrice = 5;
     const maxPrice = 50;
-    // Генеруємо цілу частину (від 5 до 49)
     const integerPart = Math.floor(Math.random() * (maxPrice - minPrice)) + minPrice;
-    // Додаємо .99
-    return `$${integerPart}.99`;
+    const price = integerPart + 0.99;
+    return price.toFixed(2); // тільки число як рядок, без знака $
 }
+
 
 
 

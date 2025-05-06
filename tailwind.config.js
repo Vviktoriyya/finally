@@ -20,7 +20,8 @@ module.exports = {
                 gray: '#3D3C3C',
                 lightGray: '#676767',
                 yellow: '#FDBF0F',
-                Orange: '#F9784B'
+                Orange: '#F9784B',
+                blackFive: 'rgba(0, 0, 0, 0.62)'
             },
             fontFamily: {
                 'unica': ['Unica One', 'sans-serif'],

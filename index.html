@@ -18,6 +18,16 @@
         ::-webkit-scrollbar {
             display: none; /* Для Chrome, Safari та Edge - ховає скролл бар */
         }
+        .scrollAuthor{
+            overflow: scroll; /* Дозволяє прокручування */
+            scrollbar-width: none;
+            max-height: 40px;
+        }
+        .scrollName{
+            overflow: scroll; /* Дозволяє прокручування */
+            scrollbar-width: none;
+            max-height: 40px;
+        }
 
     </style>
 </head>
@@ -34,7 +44,9 @@
             <button id="openSavedModal" >
                 <img src="./icon/SaveChoose.png" class="w-[16px] h-[23px]">
             </button>
-            <button><img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[24px]"></button>
+            <button id="openCartModal" class="open-cart-button">
+                <img src="./icon/SHOPPINGCART.png" class="w-[27px] h-[24px]">
+            </button>
         </div>
     </div>
 
@@ -96,6 +108,7 @@
             <img src="./img/photo.jpg" class="relative  xl:top-0 lg:top-[60px] xxl:w-[484px] xxl:h-[503px] xl:w-[384px] xl:h-[403px] lg:w-[284px] lg:h-[303px]">
         </div>
     </div>
+
     <section id="popular" class=" pt-[220px]">
         <div id="search-results-wrapper" class="pt-[50px] pb-[100px] hidden">
             <div class="flex flex-col items-center justify-center gap-[10px]">
@@ -159,7 +172,52 @@
 
 
             </div>
+            <!-- для другої форми-->
+            <div id="modalOverlay1" class="fixed flex justify-center items-center inset-0  hidden z-[200] transition-opacity duration-300">
+                <div id="modalContent1" class="relative bg-white p-6 rounded-xl shadow-lg w-[400px] scale-95 opacity-0 transition-all duration-300">
+                    <button id="closeForm1" class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl font-bold">&times;</button>
+                    <form id="orderForm1">
+                        <h2 class="text-2xl font-semibold mb-4 font-syne">ORDER FORM</h2>
+                        <div class="flex gap-6">
+                            <!-- Контент (ліворуч) -->
+                            <div id="modalBookPreview1" class="w-1/2 mt-4 bg-gray-100 rounded p-4">
+                                <!-- Тут зображення книги або інший контент -->
+                                <p>Book preview goes here</p>
+                            </div>
 
+                            <!-- Форма (праворуч) -->
+                            <div class="w-1/2 flex flex-col">
+                                <label for="firstName1" class="block mb-1 font-syne">Name:</label>
+                                <input type="text" id="firstName1" name="firstName" class="border mb-3 p-2 rounded" required placeholder="your name">
+
+                                <label for="lastName1" class="block mb-1 font-syne">Surname:</label>
+                                <input type="text" id="lastName1" name="lastName" class="border mb-3 p-2 rounded" required placeholder="your surname">
+
+                                <label for="email1" class="block mb-1 font-syne">Email:</label>
+                                <input type="email" id="email1" name="email" class="border mb-3 p-2 rounded" required placeholder="your email">
+
+                                <label for="phone1" class="block mb-1 font-syne">Phone number:</label>
+                                <input type="tel" id="phone1" name="phone" class="border mb-3 p-2 rounded" required placeholder="your phone number">
+
+                                <label for="address1" class="block mb-1 font-syne">Address:</label>
+                                <input type="text" id="address1" name="address" class="border mb-3 p-2 rounded" required placeholder="your address">
+
+                                <label for="message1" class="block mb-1 font-syne">Notes:</label>
+                                <textarea id="message1" name="message" class="border mb-3 p-2 rounded" rows="3" placeholder="write additional notes"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка -->
+                        <button type="submit" class="mt-4 order-btn leading-[1.2] border-black border-[2px] bg-orange-500 text-white px-4 py-2 w-full rounded-2xl text-[20px] flex justify-center items-center text-black">
+                            Place an order
+                        </button>
+                    </form>
+
+
+                    <!-- Після відправки -->
+                    <p id="successMsg1" class="hidden flex justify-center text-green-600 font-syne font-semibold text-[30px] mt-4">Order accepted ✅</p>
+                </div>
+            </div>
 
             <!-- Контейнер для відображення книг -->
             <div id="books-container" class="mt-10">
@@ -210,35 +268,58 @@
                     });
                 });
 
-                // Приховуємо всі розділи з книгами при завантаженні сторінки
+                // ховаю всі розділи з книгами при завантаженні сторінки
                 bookSections.forEach(section => {
                     section.classList.add('hidden', 'opacity-0');
                 });
             });
-            // Динамічно підключаємо модалку
-            fetch('./modal.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('modal-container').innerHTML = html;
-                    initializeModal(); // ініціалізація функцій для відкриття та закриття модалки
-                });
+            // модалка
+
+            document.addEventListener('DOMContentLoaded', function() {
+                fetch('./modal.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('modal-container').innerHTML = html;
+                    })
+                    .then(() => {
+                        initializeModal(); // Викликаємо тільки після повної вставки HTML
+                    })
+                    .catch(error => console.error('Помилка завантаження модалки:', error));
+            });
+
 
             function initializeModal() {
                 const openSavedModalButton = document.getElementById('openSavedModal');
                 const savedModal = document.getElementById('savedModal');
                 const closeModalButton = document.getElementById('closeModal');
                 const savedBooksList = document.getElementById('savedBooksList');
+                const openCartModalButton = document.getElementById('openCartModal');
+                const cartModal = document.getElementById('cartModal');
+                const closeCartModalButton = document.getElementById('closeCartModal');
 
+
+                savedModal.classList.add('hidden');
+                cartModal.classList.add('hidden');
+
+                // події для відкриття та закриття модалки кошика
+                openCartModalButton.addEventListener('click', () => {
+                    cartModal.classList.remove('hidden');
+                    loadCartBooks();
+                });
+
+                closeCartModalButton.addEventListener('click', () => {
+                    cartModal.classList.add('hidden');
+                });
+
+                //події для відкриття та закриття модалки збережених книг
                 openSavedModalButton.addEventListener('click', () => {
                     savedModal.classList.remove('hidden');
+                    loadSavedBooks();
                 });
 
                 closeModalButton.addEventListener('click', () => {
                     savedModal.classList.add('hidden');
                 });
-
-                // Завантаження списку книг з localStorage
-                loadSavedBooks();
 
                 // Додавання нової книги
                 const saveButton = document.querySelector('.infoBook button');
@@ -253,13 +334,13 @@
                         title: bookTitle,
                         author: bookAuthor,
                         price: bookPrice,
-                        quantity: 1 // додаємо кількість книги
+                        quantity: 1 // кількість книги
                     };
 
-                    // Перевірка на вже існуючу книгу в localStorage
+                    // перевірка на вже існуючу книгу в localStorage
                     let savedBooks = JSON.parse(localStorage.getItem('savedBooks')) || [];
 
-                    // Перевіряємо чи є така книга в списку
+                    //  чи є така книга в списку
                     const existingBook = savedBooks.find(book => book.title === bookTitle);
 
                     if (existingBook) {
@@ -286,30 +367,32 @@
                 savedBooksList.innerHTML = '';
 
                 if (savedBooks.length === 0) {
-                    savedBooksList.innerHTML = '<p>Список порожній</p>';
+                    savedBooksList.innerHTML = '' +
+                        '<div class="flex pt-[30px]">' +
+                        '<p class="font-syne pt-[20px] text-orange-500 text-[30px] font-500">The list is empty ☹️</p></div>';
                 } else {
                     savedBooks.forEach(book => {
                         const bookElement = document.createElement('div');
                         bookElement.classList.add('flex', 'gap-[20px]', 'p-[10px]', 'mb-2');
 
                         bookElement.innerHTML = `
-<div class="border-gray pb-[40px] flex lg:p-[26px] xs:p-[10px] border-2 border-dashed rounded-[20px] lg:w-[416px] xs:w-[300px] h-[200px]">
+<div class="border-gray pb-[40px] flex lg:p-[26px] xs:p-[10px] border-2 border-dashed rounded-[20px] lg:w-[416px] xs:w-[300px] xs:h-[150px] lg:h-[200px]">
     <div class="book border-2 rounded-[20px] lg:max-w-[103px] lg:h-[150px] xs:h-[114px] xs:max-w-[93px] bg-gray-300">
         <img src="${book.img}" alt="Book cover" class="rounded-[18px] lg:h-full xs:h-[110px] lg:max-w-[100px] xs:max-w-[90px]" />
     </div>
     <div class="flex flex-col">
         <div class="flex lg:gap-[40px] xs:gap-[15px] text-start">
             <div class="flex flex-col lg:gap-[12px] xs:gap-[6px]">
-                <p class="flex pl-[31px] text-gray lg:text-[16px] xs:text-[14px] font-[400] leading-[1.2] font-syne">${book.title}</p>
-                <p class="flex pl-[31px]  text-gray lg:text-[12px] xs:text-[9px] font-[400] leading-[1.2] font-syne">${book.author}</p>
+                <p class="scrollName flex pl-[31px] text-gray text-[18px] font-[400] leading-[1.2] font-syne">${book.title}</p>
+                <p class="scrollAuthor flex pl-[31px] text-gray text-[16px] font-[400] leading-[1.2] font-syne">${book.author}</p>
             </div>
-            <div class="text-Orange text-[24px] font-[400] font-syne leading-[1.2]">
+            <div class="text-orange text-[24px] pr-[20px] font-[400] font-syne leading-[1.2]">
                 ${book.price}
             </div>
         </div>
-        <div class="flex justify-end flex-col h-full lg:pt-[20px] xs:pt-[5px] ">
-            <div class="flex justify-between lg:gap-[150px] xs:gap-[60px]">
-                <div class="flex relative items-center w-full lg:pl-[31px] xs:pl-[10px] lg:h-[35px] xs:h-[15px] lg:gap-[12px] xs:gap-[7px]">
+        <div class="flex justify-end flex-col h-full lg:pt-[20px] xs:pt-[15px]">
+            <div class="flex justify-between lg:gap-[40px] xs:gap-[10px]">
+                <div class="flex relative items-center w-full lg:pl-[31px] xs:pl-[10px] lg:h-[35px] xs:h-[15px] lg:gap-[8px] xs:gap-[5px]">
                     <button class="decreaseQuantity xs:max-w-[15px]">
                         <img src="./icon/MINUS_CIRCLE.png" class="lg:w-[16px] xs:w-[40px] h-[16px]">
                     </button>
@@ -319,14 +402,21 @@
                     <button class="increaseQuantity xs:max-w-[15px]">
                         <img src="./icon/PLUS_CIRCLE.png" class="lg:w-[16px] xs:w-[40px] h-[16px]">
                     </button>
-                    <button class="flex items-end removeBook lg:pl-[80px] xs:pl-0 ">
-                        <img src="./icon/TRASH.png" class="w-[30px] h-[32px]">
-                    </button>
+
+                    <div class="pl-[10px] flex items-center gap-[8px]">
+                        <button class="flex justify-center items-center w-[45px] h-[45px] removeBook">
+                            <img src="./icon/TRASH.png" class="w-[28px] h-[30px]" alt="">
+                        </button>
+                        <button class="flex justify-center items-center w-[45px] h-[45px] movecard">
+                            <img src="./icon/SHOPPINGCART.png" class="w-[26px] h-[22px]" alt="">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>`;
+
 
                         // Додавання елементу в список
                         savedBooksList.appendChild(bookElement);
@@ -356,8 +446,43 @@
                             if (book.quantity > 1) {
                                 book.quantity--;
                                 updateBookQuantity(book);
-                                loadSavedBooks(); // Оновлюємо список після зміни кількості
+                                loadSavedBooks();
                             }
+                        });
+                        function showToast(message) {
+                            const toast = document.getElementById('toast');
+                            toast.innerText = message;
+                            toast.classList.remove('hidden');
+                            toast.classList.add('flex');
+
+                            setTimeout(() => {
+                                toast.classList.add('hidden');
+                                toast.classList.remove('flex');
+                            }, 3000);
+                        }
+
+                        // функці для переміщення книги в корзину
+                        const moveCardButton = bookElement.querySelector('.movecard');
+                        moveCardButton.addEventListener('click', () => {
+                            let cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
+
+                            const existingCartBook = cartBooks.find(cartBook => cartBook.title === book.title);
+
+                            if (existingCartBook) {
+                                existingCartBook.quantity += book.quantity;
+                            } else {
+                                cartBooks.push(book);
+                            }
+
+                            localStorage.setItem('cartBooks', JSON.stringify(cartBooks));
+
+                            let savedBooks = JSON.parse(localStorage.getItem('savedBooks')) || [];
+                            savedBooks = savedBooks.filter(savedBook => savedBook.title !== book.title);
+                            localStorage.setItem('savedBooks', JSON.stringify(savedBooks));
+
+                            loadSavedBooks();
+
+                            showToast('The book moved to cart! 🛒');
                         });
                     });
                 }
@@ -375,6 +500,170 @@
                     localStorage.setItem('savedBooks', JSON.stringify(savedBooks));
                 }
             }
+
+            document.getElementById('myButton').addEventListener('click', function() {
+                let button = this;
+
+                button.classList.add('yellow-bg');
+
+
+                setTimeout(function() {
+                    button.classList.remove('yellow-bg');
+                }, 3000);
+            });
+
+
+            function loadCartBooks() {
+                const cartBooksList = document.getElementById('cartBooksList');
+                const cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
+
+                cartBooksList.innerHTML = '';
+
+                if (cartBooks.length === 0) {
+                    cartBooksList.innerHTML = '<div class="flex pt-[30px]"><p class="font-syne pt-[20px] text-orange-500 text-[30px] font-500">Your cart is empty 🛒</p></div>';
+                } else {
+                    let totalPrice = 0; // Змінна для підрахунку загальної ціни
+                    let totalQuantity = 0; // Змінна для підрахунку загальної кількості книг
+
+                    cartBooks.forEach((book, index) => {
+                        const bookElement = document.createElement('div');
+                        bookElement.classList.add('flex', 'gap-[20px]', 'p-[10px]', 'mb-2');
+
+                        bookElement.innerHTML = `
+<div class="border-gray pb-[40px]   flex lg:p-[26px] xs:p-[10px] border-2 border-dashed rounded-[20px] lg:w-[416px] xs:w-[300px] lg:h-[210px] xs:h-[150px]">
+    <div class="book border-2 rounded-[20px] lg:max-w-[103px] lg:h-[150px] xs:h-[114px] xs:max-w-[93px] bg-gray-300">
+        <img src="${book.img}" alt="Book cover" class="rounded-[18px] lg:h-full xs:h-[110px] lg:max-w-[100px] xs:max-w-[90px]" />
+    </div>
+    <div class="flex flex-col">
+        <div class="flex lg:gap-[40px] xs:gap-[15px] text-start">
+            <div class="flex flex-col lg:gap-[12px] xs:gap-[6px]">
+                <p class="flex scrollName pl-[31px] text-gray text-[15px] font-[400] leading-[1.2] font-syne">${book.title}</p>
+                <p class="flex scrollAuthor pl-[31px] text-gray text-[15px] font-[400] leading-[1.2] font-syne">${book.author}</p>
+            </div>
+            <div class="text-orange text-[24px] font-[400] font-syne leading-[1.2]">
+                ${book.price}
+            </div>
+        </div>
+        <div class="flex justify-end flex-col h-full lg:pt-[20px] xs:pt-[35px]">
+            <div class="flex justify-between lg:gap-[150px] xs:gap-[60px]">
+                <div class="flex relative items-center lg:pb-0 xs:pb-[52px] w-full lg:pl-[31px] xs:pl-[10px] lg:h-[35px] xs:h-[15px] lg:gap-[12px] xs:gap-[7px]">
+                    <button class="decreaseQuantity xs:max-w-[15px]">
+                        <img src="./icon/MINUS_CIRCLE.png" class="lg:w-[16px] xs:w-[40px] h-[16px]">
+                    </button>
+                    <div class="flex xs:max-w-[30px] lg:max-w-[80px] leading-[1.2] justify-center items-center w-[52px] lg:h-[35px] xs:h-[25px] border-2 rounded-[10px] border-gray lg:text-[18px] xs:text-[13px] font-syne font-[400] text-gray">
+                        ${book.quantity}
+                    </div>
+                    <button class="increaseQuantity xs:max-w-[15px]">
+                        <img src="./icon/PLUS_CIRCLE.png" class="lg:w-[16px] xs:w-[40px] h-[16px]">
+                    </button>
+
+                    <button class="flex justify-center  items-center w-[50px] h-[50px] removeBook" data-index="${index}">
+                        <img src="./icon/TRASH.png" class="w-[30px] h-[32px]" alt="">
+                     </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`;
+
+                        cartBooksList.appendChild(bookElement);
+
+                        const price = parseFloat(book.price.replace('$', ''));
+                        const quantity = parseInt(book.quantity);
+
+                        if (!isNaN(price) && !isNaN(quantity)) {
+                            totalPrice += price * quantity;
+                            totalQuantity += quantity;
+                        } else {
+                            console.error(`шось не число: ${book.title}`, book);
+                        }
+                    });
+
+                    // Виведення загальної ціни та кількості книг внизу
+                    const totalElement = document.createElement('div');
+                    totalElement.classList.add('flex', 'justify-between', 'mt-2', 'p-2', 'border-t', 'border-gray-300');
+                    totalElement.innerHTML = `
+        <div class="font-syne text-[25px] flex items-center">
+            <span class="font-syne text-[20px] ">Books:</span> ${totalQuantity}
+        </div>
+        <div class="flex items-center gap-[30px]">
+            <div class="font-syne text-[20px]  ">Total price:</div>
+
+            <div class="font-syne text-orange-500 text-[30px]">
+            $${totalPrice.toFixed(2)}
+            </div>
+        </div>
+
+`;
+                    cartBooksList.appendChild(totalElement);
+                }
+
+                // обробники для кнопок збільшення та зменшення кількості
+                const decreaseButtons = document.querySelectorAll('.decreaseQuantity');
+                decreaseButtons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        updateQuantity(index, -1);
+                    });
+                });
+
+                const increaseButtons = document.querySelectorAll('.increaseQuantity');
+                increaseButtons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        updateQuantity(index, 1);
+                    });
+                });
+
+                //  обробник для кнопки видалення
+                const removeButtons = document.querySelectorAll('.removeBook');
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = button.getAttribute('data-index'); // отримуємо індекс книги
+                        removeBookFromCart(index);
+                    });
+                });
+            }
+
+            // Функція для оновлення кількості книги в кошику
+            function updateQuantity(index, change) {
+                const cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
+                if (cartBooks[index]) {
+                    const newQuantity = Math.max(1, parseInt(cartBooks[index].quantity) + change);
+                    if (!isNaN(newQuantity)) {
+                        cartBooks[index].quantity = newQuantity;
+                        localStorage.setItem('cartBooks', JSON.stringify(cartBooks));
+                        loadCartBooks(); // Перезавантажуємо кошик для відображення змін
+                        // Оновлюємо дані про кількість в localStorage 'savedBooks', якщо потрібно
+                        updateSavedBooksQuantity(cartBooks[index]);
+                    } else {
+                        console.error(`Некоректне значення кількості.`);
+                    }
+                }
+            }
+
+            // Функція для оновлення кількості в 'savedBooks'
+            function updateSavedBooksQuantity(updatedBook) {
+                let savedBooks = JSON.parse(localStorage.getItem('savedBooks')) || [];
+                const savedBookIndex = savedBooks.findIndex(book => book.title === updatedBook.title);
+                if (savedBookIndex > -1) {
+                    savedBooks[savedBookIndex].quantity = updatedBook.quantity;
+                    localStorage.setItem('savedBooks', JSON.stringify(savedBooks));
+                }
+            }
+
+            // Функція видалення книги з кошика
+            function removeBookFromCart(index) {
+                const cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
+
+                const updatedCartBooks = cartBooks.filter((book, i) => i !== parseInt(index));
+
+                localStorage.setItem('cartBooks', JSON.stringify(updatedCartBooks));
+
+                loadCartBooks();
+            }
+
+            loadCartBooks();
+
 
 
         </script>
@@ -419,6 +708,9 @@
 
 </div>
 
+
 <script src="./app.js"></script>
+<script src="./formAllBooks.js"></script>
+
 </body>
 </html>
