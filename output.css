@@ -928,10 +928,6 @@ video {
   height: 100%;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .max-h-\[165px\] {
   max-height: 165px;
 }
@@ -944,28 +940,8 @@ video {
   max-height: 900px;
 }
 
-.max-h-\[500px\] {
-  max-height: 500px;
-}
-
-.max-h-\[100px\] {
-  max-height: 100px;
-}
-
-.max-h-\[1000px\] {
-  max-height: 1000px;
-}
-
-.max-h-\[400px\] {
-  max-height: 400px;
-}
-
 .min-h-\[80px\] {
   min-height: 80px;
-}
-
-.w-1\/2 {
-  width: 50%;
 }
 
 .w-10 {
@@ -1069,16 +1045,8 @@ video {
   min-width: max-content;
 }
 
-.max-w-\[30px\] {
-  max-width: 30px;
-}
-
 .max-w-\[500px\] {
   max-width: 500px;
-}
-
-.max-w-\[50px\] {
-  max-width: 50px;
 }
 
 .max-w-\[90px\] {
@@ -1192,6 +1160,10 @@ video {
   gap: 1rem;
 }
 
+.gap-6 {
+  gap: 1.5rem;
+}
+
 .gap-\[100px\] {
   gap: 100px;
 }
@@ -1220,28 +1192,16 @@ video {
   gap: 30px;
 }
 
+.gap-\[70px\] {
+  gap: 70px;
+}
+
 .gap-\[8px\] {
   gap: 8px;
 }
 
 .gap-\[9px\] {
   gap: 9px;
-}
-
-.gap-6 {
-  gap: 1.5rem;
-}
-
-.gap-\[50px\] {
-  gap: 50px;
-}
-
-.gap-\[150px\] {
-  gap: 150px;
-}
-
-.gap-\[70px\] {
-  gap: 70px;
 }
 
 .gap-x-4 {
@@ -1257,12 +1217,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
-}
-
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
 .overflow-hidden {
@@ -1362,10 +1316,6 @@ video {
 
 .border-t {
   border-top-width: 1px;
-}
-
-.border-b-\[2px\] {
-  border-bottom-width: 2px;
 }
 
 .border-t-\[2px\] {
@@ -1470,6 +1420,11 @@ video {
   padding-right: 0.5rem;
 }
 
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1505,24 +1460,9 @@ video {
   padding-bottom: 25px;
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .py-\[30px\] {
   padding-top: 30px;
   padding-bottom: 30px;
-}
-
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.py-\[70px\] {
-  padding-top: 70px;
-  padding-bottom: 70px;
 }
 
 .pb-\[100px\] {
