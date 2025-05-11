@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('savedModal');
 
     // Масив збережених книг
-    let savedBooks = ['A hipótese do Amor']; // Можеш змінити / зробити динамічно
+    let savedBooks = ['A hipótese do Amor'];
 
     // Функція оновлення вмісту модалки
     function updateSavedModal() {
@@ -57,7 +57,15 @@ findBtn?.addEventListener('click', async (e) => {
 
     searchResultsWrapper.classList.remove('hidden');
     searchResultsWrapper.scrollIntoView({behavior: 'smooth'});
-    await renderBooks(data.docs.slice(0, 50), searchResultsContainer);
+
+    // Перевіряємо, чи є результати
+    if (data.docs && data.docs.length > 0) {
+        // Виводимо знайдені книги
+        await renderBooks(data.docs.slice(0, 50), searchResultsContainer);
+    } else {
+        // Якщо не знайдено книг, показуємо зображення
+        searchResultsContainer.innerHTML = `<img src="./img/NothingWasFound.png" alt="Не знайдено книги" class="w-full h-[200px]">`;
+    }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -334,7 +342,7 @@ async function loadBooksByGenre(genre) {
     `;
     booksContainer.appendChild(viewMoreWrapper);
 
-    // Додаємо анімацію завантаження (з'являється відразу)
+    //анімація завантаження
     const loadingContainer = document.createElement('div');
     loadingContainer.className = 'w-full h-[410px] flex items-center justify-center';
     loadingContainer.innerHTML = `
@@ -347,7 +355,7 @@ async function loadBooksByGenre(genre) {
 
     // Створюємо контейнер для книг (спочатку прихований)
     const scrollWrapper = document.createElement('div');
-    scrollWrapper.className = 'w-full h-[410px] border-2 flex items-center border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 hidden';
+    scrollWrapper.className = 'w-full h-[410px] border-2 flex items-start border-dashed overflow-y-auto overflow-x-hidden border-gray-400 rounded-[20px] px-3 py-[30px] hidden';
     booksContainer.appendChild(scrollWrapper);
 
     try {
@@ -355,9 +363,13 @@ async function loadBooksByGenre(genre) {
         const data = await res.json();
 
         const innerFlex = document.createElement('div');
-        innerFlex.className = 'flex min-w-max gap-[100px]';
+        innerFlex.className = 'flex flex-col gap-6 w-full';
 
-        // Отримуємо повну інформацію про кожну книгу
+        let row = document.createElement('div');
+        row.className = 'flex justify-center gap-[70px] flex-wrap';
+
+        let countInRow = 0;
+
         const booksWithDetails = await Promise.all(data.works.map(async work => {
             try {
                 const res = await fetch(`https://openlibrary.org${work.key}.json`);
@@ -389,13 +401,13 @@ async function loadBooksByGenre(genre) {
                 card.className = `border-2 cursor-pointer rounded-[10px] bg-gray-300 w-[187px] h-[279px] flex-shrink-0 shadow-myshadow p-2 flex flex-col justify-between transform transition-transform duration-300 hover:scale-105`;
 
                 card.innerHTML = `
-                    <img src="${imgUrl}" alt="${title}" class="w-full h-[200px] object-cover rounded-[6px]">
-                    <div>
-                        <p class="text-[14px] font-bold text-gray-800 truncate">${title}</p>
-                        <p class="text-[12px] text-gray-500 truncate">${author}</p>
-                        <p class="text-[12px] text-gray-400">${year}</p>
-                    </div>
-                `;
+                <img src="${imgUrl}" alt="${title}" class="w-full h-[200px] object-cover rounded-[6px]">
+                <div>
+                    <p class="text-[14px] font-bold text-gray-800 truncate">${title}</p>
+                    <p class="text-[12px] text-gray-500 truncate">${author}</p>
+                    <p class="text-[12px] text-gray-400">${year}</p>
+                </div>
+            `;
 
                 card.addEventListener('click', () => {
                     const bookDetails = {
@@ -404,18 +416,30 @@ async function loadBooksByGenre(genre) {
                         author: author,
                         year: year,
                         description: description,
-                        price: generateRandomPrice()
+                        price: generateRandomPrice(),
+                        booksGeners: genre
                     };
                     window.location.href = `book.html?${new URLSearchParams(bookDetails).toString()}`;
                 });
 
-                innerFlex.appendChild(card);
+                row.appendChild(card);
+                countInRow++;
+
+                if (countInRow === 5) {
+                    innerFlex.appendChild(row);
+                    row = document.createElement('div');
+                    row.className = 'flex justify-center gap-[70px] flex-wrap';
+
+                    countInRow = 0;
+                }
             }
         });
 
-        scrollWrapper.appendChild(innerFlex);
+        if (countInRow > 0) {
+            innerFlex.appendChild(row);
+        }
 
-        // Ховаємо анімацію і показуємо книги
+        scrollWrapper.appendChild(innerFlex);
         loadingContainer.classList.add('hidden');
         scrollWrapper.classList.remove('hidden');
 
@@ -423,6 +447,7 @@ async function loadBooksByGenre(genre) {
         console.error('Помилка:', err);
         loadingContainer.innerHTML = '<p class="text-red-500">Не вдалося завантажити книги. Спробуйте ще раз.</p>';
     }
+
 }
 
 // Прокручування до блоку з книгами

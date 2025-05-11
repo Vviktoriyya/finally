@@ -15,9 +15,10 @@
             scrollbar-width: none; /* Для Firefox - ховає скролл бар */
         }
 
-        ::-webkit-scrollbar {
-            display: none; /* Для Chrome, Safari та Edge - ховає скролл бар */
-        }
+        /*::-webkit-scrollbar {
+            display: none; /* Для Chrome, Safari та Edge - ховає скролл бар
+        }*/
+
         .scrollAuthor{
             overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
@@ -27,6 +28,9 @@
             overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
             max-height: 40px;
+        }
+        #modalOverlay1 {
+            background-color: rgba(0, 0, 0, 0.62); /* Прозорий чорний з 62% непрозорістю */
         }
 
     </style>
@@ -172,45 +176,59 @@
 
 
             </div>
+
             <!-- для другої форми-->
             <div id="modalOverlay1" class="fixed flex justify-center items-center inset-0  hidden z-[200] transition-opacity duration-300">
-                <div id="modalContent1" class="relative bg-white p-6 rounded-xl shadow-lg w-[400px] scale-95 opacity-0 transition-all duration-300">
+                <div id="modalContent1" class="relative bg-white p-6  rounded-xl shadow-lg  scale-95 opacity-0 transition-all duration-300">
                     <button id="closeForm1" class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl font-bold">&times;</button>
                     <form id="orderForm1">
                         <h2 class="text-2xl font-semibold mb-4 font-syne">ORDER FORM</h2>
-                        <div class="flex gap-6">
+                        <div class="flex pb-[10px] flex-col lg:flex-row xs:justify-center lg:justify-between  ">
                             <!-- Контент (ліворуч) -->
-                            <div id="modalBookPreview1" class="w-1/2 mt-4 bg-gray-100 rounded p-4">
+                            <div id="modalBookPreview1" class="xs:w-[300px] lg:w-1/2 mt-4 bg-gray-100 rounded p-4 overflow-y-auto lg:max-h-[500px] xs:max-h-[200px]" >
                                 <!-- Тут зображення книги або інший контент -->
                                 <p>Book preview goes here</p>
                             </div>
 
                             <!-- Форма (праворуч) -->
-                            <div class="w-1/2 flex flex-col">
-                                <label for="firstName1" class="block mb-1 font-syne">Name:</label>
-                                <input type="text" id="firstName1" name="firstName" class="border mb-3 p-2 rounded" required placeholder="your name">
+                            <div class="xs:w-full lg:w-1/2 flex flex-col lg:pl-[30px] xs:pl-0 gap-[10px] ">
+                                <div class="flex flex-col">
+                                    <label for="firstName1" class="block mb-1 font-syne border-t-[2px]">Name:</label>
+                                    <input type="text" id="firstName1" name="firstName" class="border lg:p-2 xs:p-1.5 rounded" required placeholder="your name">
+                                </div>
 
-                                <label for="lastName1" class="block mb-1 font-syne">Surname:</label>
-                                <input type="text" id="lastName1" name="lastName" class="border mb-3 p-2 rounded" required placeholder="your surname">
+                                <div class="flex flex-col">
+                                    <label for="lastName1" class="block mb-1 font-syne">Surname:</label>
+                                    <input type="text" id="lastName1" name="lastName" class="border lg:p-2 xs:p-1.5 rounded" required placeholder="your surname">
+                                </div>
 
-                                <label for="email1" class="block mb-1 font-syne">Email:</label>
-                                <input type="email" id="email1" name="email" class="border mb-3 p-2 rounded" required placeholder="your email">
 
-                                <label for="phone1" class="block mb-1 font-syne">Phone number:</label>
-                                <input type="tel" id="phone1" name="phone" class="border mb-3 p-2 rounded" required placeholder="your phone number">
+                                <div class="flex flex-col">
+                                    <label for="email1" class="block mb-1 font-syne">Email:</label>
+                                    <input type="email" id="email1" name="email" class="border lg:p-2 xs:p-1.5 rounded" required placeholder="your email">
+                                </div>
 
-                                <label for="address1" class="block mb-1 font-syne">Address:</label>
-                                <input type="text" id="address1" name="address" class="border mb-3 p-2 rounded" required placeholder="your address">
+                                <div class="flex flex-col">
+                                    <label for="phone1" class="block mb-1 font-syne">Phone number:</label>
+                                    <input type="tel" id="phone1" name="phone" class="border lg:p-2 xs:p-1.5 rounded" required placeholder="your phone number">
+                                </div>
 
-                                <label for="message1" class="block mb-1 font-syne">Notes:</label>
-                                <textarea id="message1" name="message" class="border mb-3 p-2 rounded" rows="3" placeholder="write additional notes"></textarea>
+
+                                <div class="flex flex-col">
+                                    <label for="address1" class="block mb-1 font-syne">Address:</label>
+                                    <input type="text" id="address1" name="address" class="border lg:p-2 xs:p-1.5 rounded" required placeholder="your address">
+                                </div>
+
+                                <div class="flex flex-col ">
+                                    <label for="message1" class="block mb-1 font-syne">Notes:</label>
+                                    <textarea id="message1" name="message" class="border lg:p-2 xs:p-1.5 rounded" rows="2" placeholder="write additional notes"></textarea>
+                                </div>
                             </div>
+
                         </div>
 
                         <!-- Кнопка -->
-                        <button type="submit" class="mt-4 order-btn leading-[1.2] border-black border-[2px] bg-orange-500 text-white px-4 py-2 w-full rounded-2xl text-[20px] flex justify-center items-center text-black">
-                            Place an order
-                        </button>
+                        <button type="submit" class=" order-btn leading-[1.2] border-black border-[2px] bg-orange-500 text-white px-4 py-2 rounded-[2] w-full" style="display: flex; border: 2px solid black; border-radius: 20px; justify-content: center; align-items: center; color: black; font-size: 20px ">Place an order</button>
                     </form>
 
 
@@ -274,6 +292,21 @@
                 });
             });
             // модалка
+            document.getElementById('firstName1').addEventListener('input', function () {
+
+                this.value = this.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
+            });
+
+            document.getElementById('lastName1').addEventListener('input', function () {
+
+                this.value = this.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '');
+            });
+
+            document.getElementById('phone1').addEventListener('input', function () {
+
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
 
             document.addEventListener('DOMContentLoaded', function() {
                 fetch('./modal.html')

@@ -53,31 +53,31 @@ function initModalForm() {
                 totalPrice += itemTotal;
 
                 html += `
-                    <div class="border-gray pb-[20px] flex p-[10px] border-2 border-dashed rounded-[20px] w-[300px] h-[150px] mb-4">
+                    <div class="border-gray pb-[20px] flex p-[10px] border-2 border-dashed rounded-[20px] h-[150px] mb-4">
                         <div class="book border-2 rounded-[20px] max-w-[93px] h-[114px] bg-gray-300">
-                            <img src="${book.img}" alt="Book cover" class="rounded-[18px] h-[110px] max-w-[90px]" />
+                            <img src="${book.img}" alt="Book cover" class="rounded-[18px] h-[100px] max-w-[90px]" />
                         </div>
                         <div class="flex flex-col">
                             <div class="flex gap-[15px] text-start">
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="scrollName flex pl-[31px] text-gray text-[18px] font-[400] leading-[1.2] font-syne">${book.title}</p>
-                                    <p class="scrollAuthor flex pl-[31px] text-gray text-[16px] max-w-[30px] font-[400] leading-[1.2] font-syne">${book.author}</p>
+                                    <p class="scrollName flex pl-[10px] text-gray text-[18px] font-[400] leading-[1.2] font-syne">${book.title}</p>
+                                    <p class="scrollAuthor flex pl-[10px] text-gray text-[16px]  font-[400] leading-[1.2] font-syne">${book.author}</p>
                                 </div>
                                 <div class="text-orange text-[24px] pr-[20px] font-[400] font-syne leading-[1.2]">
-                                    $${itemTotal.toFixed(2)}
+                                    $${price.toFixed(2)}
                                 </div>
                             </div>
                             <div class="flex justify-end flex-col h-full pt-[15px]">
                                 <div class="flex justify-between gap-[10px]">
-                                    <div class="flex relative items-center w-full pl-[10px] h-[15px] gap-[5px]">
+                                    <div class="flex relative items-center w-full pl-[10px] h-[15px] gap-[10px]">
                                         <button class="decreaseQuantity1" data-index="${index}">
-                                            <img src="./icon/MINUS_CIRCLE.png" class="w-[40px] h-[16px]">
+                                            <img src="./icon/MINUS_CIRCLE.png" class="w-[16px] h-[16px]">
                                         </button>
                                         <div class="flex max-w-[30px] leading-[1.2] justify-center items-center w-[52px] h-[25px] border-2 rounded-[10px] border-gray text-[13px] font-syne font-[400] text-gray">
                                             ${quantity}
                                         </div>
                                         <button class="increaseQuantity1" data-index="${index}">
-                                            <img src="./icon/PLUS_CIRCLE.png" class="w-[40px] h-[16px]">
+                                            <img src="./icon/PLUS_CIRCLE.png" class="w-[16px] h-[16px]">
                                         </button>
                                     </div>
                                 </div>
@@ -87,7 +87,10 @@ function initModalForm() {
                 `;
             });
 
-            html += `<p class="font-syne mt-4">Total Price: <span id="totalPrice1" class="font-bold font-syne text-orange-500 text-[30px]">$${totalPrice.toFixed(2)}</span></p>`;
+            html += `<p class="font-syne mt-4">Total Price: <span id="totalPrice1" class="font-bold font-syne text-orange-500 text-[30px]">$${totalPrice.toFixed(2)}</span></p>
+            <div class="hidden lg:block ">
+                <img src="./img/book.gif" class=" sm:w-[50px]  lg:w-[300px]" alt="">
+            </div>`;
         }
 
         modalBookPreview1.innerHTML = html;

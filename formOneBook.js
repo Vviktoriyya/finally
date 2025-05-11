@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <div class="border-gray pb-[20px] flex p-[10px] border-2 border-dashed rounded-[20px] w-[300px] h-[150px]">
         <div class="book border-2 rounded-[20px] max-w-[93px] h-[114px] bg-gray-300">
-            <img src="${img}" alt="Book cover" class="rounded-[18px] h-[110px] max-w-[90px]" />
+            <img src="${img}" alt="Book cover" class="rounded-[18px] h-[100px] max-w-[90px]" />
         </div>
         <div class="flex flex-col">
             <div class="flex gap-[15px] text-start">
@@ -62,15 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="flex justify-end flex-col h-full pt-[15px]">
                 <div class="flex justify-between gap-[10px]">
-                    <div class="flex relative items-center w-full pl-[10px] h-[15px] gap-[5px]">
-                        <button class="decreaseQuantity max-w-[15px]">
-                            <img src="./icon/MINUS_CIRCLE.png" class="w-[40px] h-[16px]">
+                    <div class="flex relative items-center w-full pl-[10px] h-[15px] gap-[10px]">
+                        <button class="decreaseQuantity max-w-[15px] ">
+                            <img src="./icon/MINUS_CIRCLE.png" class="w-[16px] h-[16px]">
                         </button>
                         <div id="quantityDisplay" class="flex max-w-[30px] leading-[1.2] justify-center items-center w-[52px] h-[25px] border-2 rounded-[10px] border-gray text-[13px] font-syne font-[400] text-gray">
                             ${quantity}
                         </div>
                         <button class="increaseQuantity max-w-[15px]">
-                            <img src="./icon/PLUS_CIRCLE.png" class="w-[40px] h-[16px]">
+                            <img src="./icon/PLUS_CIRCLE.png" class="w-[16px] h-[16px]">
                         </button>
 
 
@@ -81,6 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
    <p class="font-syne ">Total Price: <span id="totalPrice" class="font-bold font-syne text-orange-500 text-[30px]">$${price}</span></p>
+   <div class="hidden lg:block ">
+                <img src="./img/book.gif" class=" sm:w-[50px]  lg:w-[300px]" alt="">
+            </div>
 `;
 
     // Додаємо слухачів на кнопки збільшення/зменшення всередині модального вікна
@@ -102,38 +105,35 @@ document.addEventListener('DOMContentLoaded', () => {
 //це щоб кількість передалась у форму
     document.querySelector('.increaseQuantity').addEventListener('click', function() {
         quantity++;
-        updateTotalPrice(price, quantity);  // Оновлюємо ціну
-        updateQuantityDisplay(quantity);    // Оновлюємо кількість
+        updateTotalPrice(price, quantity);
+        updateQuantityDisplay(quantity);
     });
 
     document.querySelector('.decreaseQuantity').addEventListener('click', function() {
-        if (quantity > 1) {  // Кількість не може бути меншою за 1
+        if (quantity > 1) {
             quantity--;
-            updateTotalPrice(price, quantity);  // Оновлюємо ціну
-            updateQuantityDisplay(quantity);    // Оновлюємо кількість
+            updateTotalPrice(price, quantity);
+            updateQuantityDisplay(quantity);
         }
     });
 
-    document.getElementById('quantityDisplay').textContent = quantity;
 
     // Функція для оновлення кількості та ціни
     function updateModalQuantity() {
-        document.getElementById('quantityDisplay').textContent = quantity;
         document.getElementById('totalPrice').textContent = `$${calculateTotal(price, quantity)}`;
+        document.getElementById('quantityDisplay').textContent = quantity;
     }
+
 
 
     // Обробка форми замовлення
     orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Приховуємо всю форму
         orderForm.classList.add('hidden');
 
-        // Показати повідомлення про успішне замовлення
-        successMsg.classList.remove('hidden'); // Показує повідомлення "Замовлення прийнято"
+        successMsg.classList.remove('hidden');
 
-        // Закрити форму через кілька секунд (опціонально)
         setTimeout(() => {
             modalOverlay.classList.add('hidden');
             modalContent.classList.remove('scale-100', 'opacity-100');
@@ -156,9 +156,4 @@ function updateQuantityDisplay(quantity) {
     quantityDisplay.textContent = quantity;
 }
 
-// Ініціалізація при завантаженні сторінки
-window.onload = function() {
-    updateTotalPrice(price, quantity);   // Оновлюємо ціну одразу на початку
-    updateQuantityDisplay(quantity);     // Оновлюємо кількість
-};
-updateTotalPrice(price, quantity);
+
