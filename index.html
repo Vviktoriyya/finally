@@ -18,16 +18,21 @@
         /*::-webkit-scrollbar {
             display: none; /* Для Chrome, Safari та Edge - ховає скролл бар
         }*/
+        * {
+            box-sizing: border-box;
+        }
 
         .scrollAuthor{
             overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
             max-height: 40px;
+            max-width: 100px;
         }
         .scrollName{
             overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
             max-height: 40px;
+            max-width: 90px;
         }
         #modalOverlay1 {
             background-color: rgba(0, 0, 0, 0.62); /* Прозорий чорний з 62% непрозорістю */

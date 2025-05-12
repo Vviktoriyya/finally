@@ -8,27 +8,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         html, body {
-            overflow: scroll; /* Дозволяє прокручування */
-            scrollbar-width: none; /* Для Firefox - ховає скролл бар */
+            overflow: scroll;
+            scrollbar-width: none;
         }
 
 
         .scrollAuthor{
-            overflow: scroll; /* Дозволяє прокручування */
+            overflow: scroll;
             scrollbar-width: none;
             max-height: 40px;
+            max-width: 100px;
         }
         .scrollName{
-            overflow: scroll; /* Дозволяє прокручування */
+            overflow: scroll;
             scrollbar-width: none;
             max-height: 40px;
+            max-width: 90px;
         }
         #modalOverlay {
-            background-color: rgba(0, 0, 0, 0.62); /* Прозорий чорний з 62% непрозорістю */
+            background-color: rgba(0, 0, 0, 0.62);
         }
         #modalOverlay1 {
-            background-color: rgba(0, 0, 0, 0.62); /* Прозорий чорний з 62% непрозорістю */
+            background-color: rgba(0, 0, 0, 0.62);
         }
 
     </style>
@@ -38,10 +44,10 @@
 
 <div class="w-full mx-auto pt-[60px] px-[20px] sm:px-[50px] md:px-[50px] lg:px-[110px] xxl:px-[170px]">
     <div class="header flex justify-between  ">
-        <div class="logo flex justify-between items-center gap-[12px] ">
+        <a href="index.html" class="logo flex justify-between items-center gap-[12px] ">
             <img src="./icon/BookLogoOpen.png" class="w-[26px] h-[22px]">
             <p class="font-unica text-[20px]">BOOKStore</p>
-        </div>
+        </a>
         <div class="buttons flex gap-[20px]">
             <button id="openSavedModal" >
                 <img src="./icon/SaveChoose.png" class="w-[16px] h-[23px] ">
@@ -104,9 +110,10 @@
             </div>
 
             <div class="pt-[23px] flex flex-col sm:flex-row justify-between items-center gap-[16px]">
-                <a href="" class="relative w-full sm:w-1/2 justify-center items-center h-[46px] flex border-[2px] bg-yellow rounded-[20px] border-gray">
+                <a href="#" id="addToCartBtn" class="relative w-full sm:w-1/2 justify-center items-center h-[46px] flex border-[2px] bg-yellow rounded-[20px] border-gray">
                     <img src="./icon/SHOPPINGCART.png" class="w-[26px] h-[25px]">
                 </a>
+
                 <a href="#" id="openForm" class="btn-open-modal relative w-full sm:w-1/2 justify-center items-center h-[46px] flex border-[2px] bg-orange-500 rounded-[20px] border-gray">
                     <p class="text-gray font-syne text-[20px] font-[400]">Buy Now</p>
                 </a>
@@ -470,9 +477,9 @@
                 title: bookTitle,
                 author: bookAuthor,
                 price: bookPrice,
-                quantity: bookCount //використовуємо вибрану кількість
+                quantity: bookCount
             };
-            //в локал память , якщо нема то пустий масив
+
             let savedBooks = JSON.parse(localStorage.getItem('savedBooks')) || [];
             //чи є книга
             const existingBook = savedBooks.find(book => book.title === bookTitle);
@@ -486,10 +493,42 @@
             }
 
             localStorage.setItem('savedBooks', JSON.stringify(savedBooks));
-            loadSavedBooks(); // Оновлюємо модалку
+            loadSavedBooks();
         });
 
     }
+
+    document.getElementById('addToCartBtn')?.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const bookImg = document.getElementById('book-img').src;
+        const bookTitle = document.getElementById('book-title').innerText;
+        const bookAuthor = document.getElementById('book-author').innerText;
+        const bookPrice = document.getElementById('book-price').innerText;
+        const bookCount = parseInt(document.getElementById('book-count').innerText); // кількість
+
+        const bookData = {
+            img: bookImg,
+            title: bookTitle,
+            author: bookAuthor,
+            price: bookPrice,
+            quantity: bookCount
+        };
+
+        let cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
+        const existingBook = cartBooks.find(book => book.title === bookTitle);
+
+        if (existingBook) {
+            existingBook.quantity += bookCount;
+        } else {
+            cartBooks.push(bookData);
+        }
+
+        localStorage.setItem('cartBooks', JSON.stringify(cartBooks));
+
+    });
+
+
 
     ///////////////////////////////////////////////////////////////////////////////  збережені
     function loadSavedBooks() {

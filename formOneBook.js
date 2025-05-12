@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex gap-[15px] text-start">
                 <div class="flex flex-col gap-[6px]">
                     <p class="scrollName flex pl-[31px] text-gray text-[18px] font-[400] leading-[1.2] font-syne">${title}</p>
-                    <p class="scrollAuthor flex pl-[31px] text-gray text-[16px] max-w-[30px] font-[400] leading-[1.2] font-syne">${author}</p>
+                    <p class="scrollAuthor flex pl-[31px] text-gray text-[16px] font-[400] leading-[1.2] font-syne">${author}</p>
                 </div>
                <div class="text-orange text-[24px] pr-[20px] font-[400] font-syne leading-[1.2]">
                     $${(price * quantity).toFixed(2)}

@@ -58,12 +58,12 @@ function initModalForm() {
                             <img src="${book.img}" alt="Book cover" class="rounded-[18px] h-[100px] max-w-[90px]" />
                         </div>
                         <div class="flex flex-col">
-                            <div class="flex gap-[15px] text-start">
+                            <div class="flex gap-[15px]  ">
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="scrollName flex pl-[10px] text-gray text-[18px] font-[400] leading-[1.2] font-syne">${book.title}</p>
-                                    <p class="scrollAuthor flex pl-[10px] text-gray text-[16px]  font-[400] leading-[1.2] font-syne">${book.author}</p>
+                                    <p class="scrollName flex pl-[10px] text-gray lg:text-[18px] xs:text-[12px] font-[400] leading-[1.2] font-syne">${book.title}</p>
+                                    <p class="scrollAuthor flex pl-[10px] text-gray lg:text-[16px] xs:text-[10px]  font-[400] leading-[1.2] font-syne">${book.author}</p>
                                 </div>
-                                <div class="text-orange text-[24px] pr-[20px] font-[400] font-syne leading-[1.2]">
+                                <div class="text-orange text-[24px]  pr-[20px] font-[400] font-syne  leading-[1.2]">
                                     $${price.toFixed(2)}
                                 </div>
                             </div>
