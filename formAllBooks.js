@@ -124,52 +124,6 @@ function initModalForm() {
     // Обробник форми замовлення
     orderForm1?.addEventListener('submit', function(e) {
         e.preventDefault();
-
-        // Збираємо дані з форми
-        const formData = {
-            firstName: document.getElementById('firstName1').value,
-            lastName: document.getElementById('lastName1').value,
-            email: document.getElementById('email1').value,
-            phone: document.getElementById('phone1').value,
-            address: document.getElementById('address1').value,
-            message: document.getElementById('message1').value || '',
-            // Інформація про книги з кошика
-            books: (() => {
-                const cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
-                let totalPrice = 0;
-                const books = cartBooks.map(book => {
-                    const price = parseFloat(book.price.replace('$', '')) || 0;
-                    const quantity = parseInt(book.quantity) || 1;
-                    const itemTotal = price * quantity;
-                    totalPrice += itemTotal;
-                    return {
-                        title: book.title,
-                        author: book.author,
-                        img: book.img,
-                        price: price.toFixed(2),
-                        quantity: quantity,
-                        itemTotal: itemTotal.toFixed(2)
-                    };
-                });
-                return {
-                    items: books,
-                    totalPrice: totalPrice.toFixed(2),
-                    totalQuantity: books.reduce((sum, book) => sum + book.quantity, 0)
-                };
-            })(),
-            // Службові дані
-            submittedAt: new Date().toISOString(),
-            orderType: 'multiple'
-        };
-
-        // Зберігаємо замовлення в localStorage
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        orders.push(formData);
-        localStorage.setItem('orders', JSON.stringify(orders));
-
-        // Очищаємо кошик після успішного замовлення
-        localStorage.removeItem('cartBooks');
-
         orderForm1.classList.add('hidden');
         document.getElementById('successMsg1').classList.remove('hidden');
 

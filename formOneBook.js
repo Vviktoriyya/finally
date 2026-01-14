@@ -130,33 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     orderForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Збираємо дані з форми
-        const formData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            address: document.getElementById('address').value,
-            message: document.getElementById('message').value || '',
-            // Інформація про книгу
-            book: {
-                title: title,
-                author: author,
-                img: img,
-                price: price,
-                quantity: quantity,
-                totalPrice: (price * quantity).toFixed(2)
-            },
-            // Службові дані
-            submittedAt: new Date().toISOString(),
-            orderType: 'single'
-        };
-
-        // Зберігаємо замовлення в localStorage
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        orders.push(formData);
-        localStorage.setItem('orders', JSON.stringify(orders));
-
         orderForm.classList.add('hidden');
 
         successMsg.classList.remove('hidden');

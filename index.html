@@ -12,30 +12,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
     <style>
         html, body {
-            overflow: scroll;
-            scrollbar-width: none;
+            overflow: scroll; /* Дозволяє прокручування */
+            scrollbar-width: none; /* Для Firefox - ховає скролл бар */
+        }
 
-
+        /*::-webkit-scrollbar {
+            display: none; /* Для Chrome, Safari та Edge - ховає скролл бар
+        }*/
         * {
             box-sizing: border-box;
         }
 
         .scrollAuthor{
-            overflow: scroll;
+            overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
             max-height: 40px;
             max-width: 100px;
         }
         .scrollName{
-            overflow: scroll;
+            overflow: scroll; /* Дозволяє прокручування */
             scrollbar-width: none;
             max-height: 40px;
             max-width: 90px;
         }
+        #modalOverlay1 {
+            background-color: rgba(0, 0, 0, 0.62); /* Прозорий чорний з 62% непрозорістю */
+        }
 
-            #modalOverlay1 {
-                background-color: rgba(0, 0, 0, 0.62);
-            }
     </style>
 </head>
 <body>

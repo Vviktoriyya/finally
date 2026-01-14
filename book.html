@@ -17,7 +17,6 @@
         html, body {
             overflow: scroll;
             scrollbar-width: none;
-
         }
 
 
@@ -414,7 +413,7 @@
             if (booksGeners) {
                 fetchAndDisplaySearchedBooks(booksGeners, 'booksGenre');
             } else {
-                console.log('Жанр не знайдено ');
+                console.log('Жанр не знайдено в URL параметрах - використовуємо жанр за замовчуванням');
                 // Можна встановити жанр за замовчуванням або показати повідомлення
                 fetchAndDisplaySearchedBooks('fiction', 'booksGenre'); // Наприклад, шукати 'fiction'
                 // Або показати повідомлення:
@@ -702,6 +701,8 @@
     function loadCartBooks() {
         //Отримання елемента для списку книг у кошику
         const cartBooksList = document.getElementById('cartBooksList');
+        //localStorage.getItem('cartBooks') — намагається отримати збережену інформацію про книги в кошику з localStorage за ключем cartBooks.
+        //JSON.parse() перетворює отриманий рядок у масив або об'єкт, якщо це було раніше збережено в такому форматі.
         const cartBooks = JSON.parse(localStorage.getItem('cartBooks')) || [];
 
         // Очищаємо список перед оновленням
@@ -754,9 +755,7 @@
             </div>
         </div>
     </div>
-<div id="toast" class="fixed top-5 right-5 z-[300] hidden bg-yellow border-2 border-gray px-6 py-3 rounded-[20px] shadow-lg font-syne animate-bounce">
-    Book saved! ⭐️
-</div>
+
 </div>
 `;
 
@@ -926,8 +925,6 @@
 <script src="./app.js"></script>
 <script src="./formOneBook.js"></script>
 <script src="./formAllBooks.js"></script>
-<script src="./submit.js"></script>
-
 
 </body>
 </html>

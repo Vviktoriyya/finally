@@ -96,6 +96,7 @@ async function renderBooks(books, container) {
             ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
             : './img/bookk.jpg';
 
+        // Отримуємо опис (якщо є в першій відповіді)
         let description = book.description ||
             book.first_sentence ||
             'No description available';
@@ -140,7 +141,7 @@ async function renderBooks(books, container) {
                 author: author,
                 description: description,
                 year: year,
-                price: generateRandomPrice()
+                price: generateRandomPrice() // Додаємо випадкову ціну
             });
             window.location.href = `book.html?${params.toString()}`;
         });
@@ -203,7 +204,7 @@ let itemsPerPage = calculateItemsPerPage();
 let currentPage = 0;
 let totalPages = Math.ceil(categories.length / itemsPerPage);
 
-// функція для визначення кількості елементів на сторінці
+// Оновлена функція для визначення кількості елементів на сторінці
 function calculateItemsPerPage() {
     let itemsPerRow, rows;
 
@@ -218,7 +219,7 @@ function calculateItemsPerPage() {
         rows = 2;         // 2 рядки
     }
 
-    //  стилів сітки
+    // Оновлення стилів сітки
     categoryList.style.gridTemplateColumns = `repeat(${itemsPerRow}, 1fr)`;
     categoryList.style.gridTemplateRows = `repeat(${rows}, auto)`;
     categoryList.style.gap = '16px';
