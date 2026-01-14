@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Адмін — Замовлення</title>
+    <link href="./output.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Syne', sans-serif; }
+        .order-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .order-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        /* Компактний режим — зменшуємо базовий rem та ключові відступи */
+        html.compact { font-size: 13px; } /* було ~16px */
+        html.compact #list > * + * { margin-top: 0.5rem !important; } /* щільніший список */
+        html.compact .order-card { padding: 0.75rem !important; }      /* щільніші картки */
+        html.compact #refresh,
+        html.compact #clearAll,
+        html.compact #toggleCompact {
+            padding: 0.375rem 0.75rem !important;
+            font-size: 0.875rem !important;
+            border-width: 2px !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900">
+<div class="max-w-6xl mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold font-unica">Панель адміністратора</h1>
+        <div class="flex gap-2 items-center">
+            <button id="refresh" class="px-4 py-2 bg-orange-500 text-white rounded-[10px] hover:bg-orange-600 font-syne border-2 border-gray-800">Оновити</button>
+            <button id="clearAll" class="px-4 py-2 bg-red-500 text-white rounded-[10px] hover:bg-red-600 font-syne border-2 border-gray-800">Очистити всі</button>
+            <button id="toggleCompact" class="px-4 py-2 bg-gray-200 text-gray-900 rounded-[10px] hover:bg-gray-300 font-syne border-2 border-gray-800" aria-pressed="true">Звичайний режим</button>
+            <span id="status" class="text-sm text-gray-500 font-syne"></span>
+        </div>
+    </div>
+
+    <div id="list" class="space-y-4"></div>
+</div>
+
+<script>
+    // Увімкнути компактний режим за замовчуванням, зберігати вибір
+    (function () {
+        const btn = document.getElementById('toggleCompact');
+        const root = document.documentElement;
+        const saved = localStorage.getItem('admin_compact');
+        const initialOn = saved === null ? true : saved === '1';
+
+        function apply(on) {
+            root.classList.toggle('compact', on);
+            localStorage.setItem('admin_compact', on ? '1' : '0');
+            btn.setAttribute('aria-pressed', String(on));
+            btn.textContent = on ? 'Звичайний режим' : 'Компактний режим';
+        }
+
+        apply(initialOn);
+        btn.addEventListener('click', () => apply(!root.classList.contains('compact')));
+    })();
+</script>
+
+<script src="./admin.js"></script>
+</body>
+</html>

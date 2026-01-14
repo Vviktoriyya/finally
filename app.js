@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('savedModal');
 
     // Масив збережених книг
-    let savedBooks = ['A hipótese do Amor']; // Можеш змінити / зробити динамічно
+    let savedBooks = ['A hipótese do Amor'];
 
     // Функція оновлення вмісту модалки
     function updateSavedModal() {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// При пошуку "звичних" книг — оновлюється блок Trending
+// При пошуку "popular" книг — оновлюється блок Trending
 searchBtn.addEventListener('click', async () => {
     const query = input.value.trim();
     if (!query) return;
@@ -57,7 +57,15 @@ findBtn?.addEventListener('click', async (e) => {
 
     searchResultsWrapper.classList.remove('hidden');
     searchResultsWrapper.scrollIntoView({behavior: 'smooth'});
-    await renderBooks(data.docs.slice(0, 50), searchResultsContainer);
+
+    // Перевіряємо, чи є результати
+    if (data.docs && data.docs.length > 0) {
+        // Виводимо знайдені книги
+        await renderBooks(data.docs.slice(0, 50), searchResultsContainer);
+    } else {
+        // Якщо не знайдено книг, показуємо зображення
+        searchResultsContainer.innerHTML = `<img src="./img/NothingWasFound.png" alt="Не знайдено книги" class="w-full h-[200px]">`;
+    }
 });
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -88,7 +96,6 @@ async function renderBooks(books, container) {
             ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
             : './img/bookk.jpg';
 
-        // Отримуємо опис (якщо є в першій відповіді)
         let description = book.description ||
             book.first_sentence ||
             'No description available';
@@ -133,7 +140,7 @@ async function renderBooks(books, container) {
                 author: author,
                 description: description,
                 year: year,
-                price: generateRandomPrice() // Додаємо випадкову ціну
+                price: generateRandomPrice()
             });
             window.location.href = `book.html?${params.toString()}`;
         });
@@ -196,7 +203,7 @@ let itemsPerPage = calculateItemsPerPage();
 let currentPage = 0;
 let totalPages = Math.ceil(categories.length / itemsPerPage);
 
-// Оновлена функція для визначення кількості елементів на сторінці
+// функція для визначення кількості елементів на сторінці
 function calculateItemsPerPage() {
     let itemsPerRow, rows;
 
@@ -211,7 +218,7 @@ function calculateItemsPerPage() {
         rows = 2;         // 2 рядки
     }
 
-    // Оновлення стилів сітки
+    //  стилів сітки
     categoryList.style.gridTemplateColumns = `repeat(${itemsPerRow}, 1fr)`;
     categoryList.style.gridTemplateRows = `repeat(${rows}, auto)`;
     categoryList.style.gap = '16px';
@@ -334,7 +341,7 @@ async function loadBooksByGenre(genre) {
     `;
     booksContainer.appendChild(viewMoreWrapper);
 
-    // Додаємо анімацію завантаження (з'являється відразу)
+    //анімація завантаження
     const loadingContainer = document.createElement('div');
     loadingContainer.className = 'w-full h-[410px] flex items-center justify-center';
     loadingContainer.innerHTML = `
@@ -347,7 +354,7 @@ async function loadBooksByGenre(genre) {
 
     // Створюємо контейнер для книг (спочатку прихований)
     const scrollWrapper = document.createElement('div');
-    scrollWrapper.className = 'w-full h-[410px] border-2 flex items-center border-dashed overflow-x-auto border-gray-400 rounded-[20px] px-4 hidden';
+    scrollWrapper.className = 'w-full h-[410px] border-2 flex items-start border-dashed overflow-y-auto overflow-x-hidden border-gray-400 rounded-[20px] px-3 py-[30px] hidden';
     booksContainer.appendChild(scrollWrapper);
 
     try {
@@ -355,9 +362,13 @@ async function loadBooksByGenre(genre) {
         const data = await res.json();
 
         const innerFlex = document.createElement('div');
-        innerFlex.className = 'flex min-w-max gap-[100px]';
+        innerFlex.className = 'flex flex-col gap-6 w-full';
 
-        // Отримуємо повну інформацію про кожну книгу
+        let row = document.createElement('div');
+        row.className = 'flex justify-center gap-[70px] flex-wrap';
+
+        let countInRow = 0;
+
         const booksWithDetails = await Promise.all(data.works.map(async work => {
             try {
                 const res = await fetch(`https://openlibrary.org${work.key}.json`);
@@ -389,13 +400,13 @@ async function loadBooksByGenre(genre) {
                 card.className = `border-2 cursor-pointer rounded-[10px] bg-gray-300 w-[187px] h-[279px] flex-shrink-0 shadow-myshadow p-2 flex flex-col justify-between transform transition-transform duration-300 hover:scale-105`;
 
                 card.innerHTML = `
-                    <img src="${imgUrl}" alt="${title}" class="w-full h-[200px] object-cover rounded-[6px]">
-                    <div>
-                        <p class="text-[14px] font-bold text-gray-800 truncate">${title}</p>
-                        <p class="text-[12px] text-gray-500 truncate">${author}</p>
-                        <p class="text-[12px] text-gray-400">${year}</p>
-                    </div>
-                `;
+                <img src="${imgUrl}" alt="${title}" class="w-full h-[200px] object-cover rounded-[6px]">
+                <div>
+                    <p class="text-[14px] font-bold text-gray-800 truncate">${title}</p>
+                    <p class="text-[12px] text-gray-500 truncate">${author}</p>
+                    <p class="text-[12px] text-gray-400">${year}</p>
+                </div>
+            `;
 
                 card.addEventListener('click', () => {
                     const bookDetails = {
@@ -404,18 +415,30 @@ async function loadBooksByGenre(genre) {
                         author: author,
                         year: year,
                         description: description,
-                        price: generateRandomPrice()
+                        price: generateRandomPrice(),
+                        booksGeners: genre
                     };
                     window.location.href = `book.html?${new URLSearchParams(bookDetails).toString()}`;
                 });
 
-                innerFlex.appendChild(card);
+                row.appendChild(card);
+                countInRow++;
+
+                if (countInRow === 5) {
+                    innerFlex.appendChild(row);
+                    row = document.createElement('div');
+                    row.className = 'flex justify-center gap-[70px] flex-wrap';
+
+                    countInRow = 0;
+                }
             }
         });
 
-        scrollWrapper.appendChild(innerFlex);
+        if (countInRow > 0) {
+            innerFlex.appendChild(row);
+        }
 
-        // Ховаємо анімацію і показуємо книги
+        scrollWrapper.appendChild(innerFlex);
         loadingContainer.classList.add('hidden');
         scrollWrapper.classList.remove('hidden');
 
@@ -423,6 +446,7 @@ async function loadBooksByGenre(genre) {
         console.error('Помилка:', err);
         loadingContainer.innerHTML = '<p class="text-red-500">Не вдалося завантажити книги. Спробуйте ще раз.</p>';
     }
+
 }
 
 // Прокручування до блоку з книгами
@@ -446,12 +470,71 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function generateRandomPrice() {
-    // Генеруємо ціну від 5 до 50 доларів
     const minPrice = 5;
     const maxPrice = 50;
-    // Генеруємо цілу частину (від 5 до 49)
     const integerPart = Math.floor(Math.random() * (maxPrice - minPrice)) + minPrice;
-    // Додаємо .99
-    return `$${integerPart}.99`;
+    const price = integerPart + 0.99;
+    return price.toFixed(2); // тільки число як рядок, без знака $
 }
+
+
+
+
+// Знаходимо елементи
+const addToCartBtn = document.querySelector('a[href=""]'); // твоя кнопка "додати в кошик"
+const savedBooksList = document.getElementById('savedBooksList');
+const savedModal = document.getElementById('savedModal');
+
+// Функція для створення HTML книги в модалці
+function createSavedBook(title, author, price, imgSrc) {
+    const bookItem = document.createElement('div');
+    bookItem.className = 'flex items-center gap-4 p-4 border-b';
+
+    bookItem.innerHTML = `
+        <div class="w-[50px] h-[75px] bg-gray-300 rounded-[10px] overflow-hidden">
+            <img src="${imgSrc}" alt="Book cover" class="w-full h-full object-cover" />
+        </div>
+        <div class="flex flex-col text-left">
+            <p class="font-bold text-gray-800">${title}</p>
+            <p class="text-gray-500 text-sm">${author}</p>
+            <p class="text-orange-500 text-lg">${price}</p>
+        </div>
+    `;
+
+    return bookItem;
+}
+
+// Обробник кліку на кнопку додати в кошик
+addToCartBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Щоб не перезавантажувалась сторінка через <a href="">
+
+    const title = document.getElementById('book-title').innerText.trim();
+    const author = document.getElementById('book-author').innerText.trim();
+    const price = document.getElementById('book-price').innerText.trim();
+    const img = document.getElementById('book-img').getAttribute('src') || '';
+
+    if (title && author && price) {
+        const savedBook = createSavedBook(title, author, price, img);
+
+        // Якщо "Список порожній", видаляємо цей текст
+        if (savedBooksList.classList.contains('hidden')) {
+            savedBooksList.classList.remove('hidden');
+            savedBooksList.innerHTML = '';
+        }
+
+        savedBooksList.appendChild(savedBook);
+
+        // Відкриваємо модалку
+        savedModal.classList.remove('hidden');
+    }
+});
+
+// Закриття модалки
+const closeModalBtn = document.getElementById('closeModal');
+closeModalBtn.addEventListener('click', () => {
+    savedModal.classList.add('hidden');
+});
+
+
+
 //ass

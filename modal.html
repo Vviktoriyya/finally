@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Title</title>
+    <link href="./output.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- modal.html -->
+
+<div id="savedModal" class="overflow-hidden fixed top-0 right-0 max-h-[900px] z-50 bg-white shadow-lg flex justify-center items-center  max-w-[500px]">
+    <div class="lg:p-[30px] xs:p-[10px] h-full flex flex-col relative  overflow-hidden">
+        <button id="closeModal" class="flex items-center gap-4 pt-[50px] absolute top-4 left-4 text-gray-500 text-[20px]">
+            <img src="./icon/CARET_LEFT.png" class="w-[32px] h-[32px]">
+            <p class="font-syne text-[20px] leading-[1.2]">Your saved books </p>
+            <p >♡</p>
+        </button>
+
+        <div class="pt-[80px]">
+
+            <div id="savedBooksList" class="scrollbar-hidden overflow-y-auto max-h-[700px] text-gray-700 text-[16px] space-y-2 text-center mt-5 pr-[10px]">
+                <!-- Тут будуть додаватися книги -->
+                <p class="w-full pl-[30px] font-syne text-orange-500 text-[30px]">The list is empty ☹️</p>
+            </div>
+            <div id="toast" class=" hidden flex  p-[20px]  border-2 border-dashed rounded-[15px] py-2 px-4  shadow-lg text-[20px] font-syne z-50">
+                Книгу перенесено у корзину! 🛒
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Модалка для кошика -->
+<div id="cartModal" class="modal overflow-hidden fixed top-0 right-0 max-h-[900px] z-50 bg-white shadow-lg flex justify-center items-center max-w-[500px] hidden">
+    <div class="lg:p-[30px] xs:p-[10px] h-full flex flex-col relative ">
+        <button id="closeCartModal" class="flex  items-center gap-4 pt-[50px] absolute top-4 left-4 text-gray-500 text-[20px]">
+            <img src="./icon/CARET_LEFT.png" class="w-[32px] h-[32px]">
+            <p class="font-syne text-[20px] leading-[1.2] ">Your cart</p>
+            <p>🛒</p>
+        </button>
+        <div id="toasttwo" class=" hidden flex  p-[20px]  border-2 border-dashed rounded-[15px] py-2 px-4  shadow-lg text-[20px] font-syne z-50">
+            The book moved to cart
+        </div>
+
+        <div class="flex pt-[80px]">
+            <div id="cartBooksList" class="scrollbar-hidden overflow-y-auto max-h-[700px] text-gray-700 text-[16px] space-y-2 text-center mt-5 pr-[10px]">
+                <!-- Сюди товари з кошика -->
+                <p class="w-full pl-[30px] font-syne text-orange-500 text-[30px]">Your cart is empty 🛒</p>
+            </div>
+
+        </div>
+
+        <a href="#" id="openFormTwo" class="btn-open-modal1 relative w-full sm:w-1/2 justify-center items-center h-[46px] flex border-[2px] bg-orange-500 rounded-[20px] border-gray">
+            <p class="text-gray font-syne text-[20px] font-[400]">Buy All</p>
+        </a>
+    </div>
+</div>
+
+
+<script src="./formAllBooks.js"></script>
+
+
+</body>
+</html>
